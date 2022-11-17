@@ -9,6 +9,14 @@ package Modelo;
  * @author Elieth
  */
 public class Clientes {
+ 
+    private int codcli;
+    private String nomb1;
+    private String nomb2;
+    private String apell1;
+    private String apell2;
+    private String numcelu;
+    private String direc;
 
     public Clientes(int codcli, String nomb1, String nomb2, String apell1, String apell2, String numcelu, String direc) {
         this.codcli = codcli;
@@ -27,6 +35,11 @@ public class Clientes {
         this.apell2 = apell2;
         this.numcelu = numcelu;
         this.direc = direc;
+    }
+
+    public Clientes(int codcli, String nomb1) {
+        this.codcli = codcli;
+        this.nomb1 = nomb1;
     }
 
     public int getCodcli() {
@@ -84,14 +97,12 @@ public class Clientes {
     public void setDirec(String direc) {
         this.direc = direc;
     }
-
     
-    private int codcli;
-    private String nomb1;
-    private String nomb2;
-    private String apell1;
-    private String apell2;
-    private String numcelu;
-    private String direc;
    
+    
+    
+    @Override
+    public String toString(){
+       return codcli + " - " + nomb1;
+   }
 }
