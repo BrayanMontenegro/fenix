@@ -4,7 +4,7 @@
  */
 package Controlador;
 
-import Modelo.Devolucion;
+import Vista.RegistroDevoluciones;
 import Vista.RegistroClientes;
 import Vista.Nventa;
 import Vista.RegistroUsuario;
@@ -16,20 +16,20 @@ import Vista.RegistroDevoluciones;
  * @author Oreki
  */
 public class MDIhome extends javax.swing.JFrame {
-    
+
     private RegistroDevoluciones devolucions;
 
     private Registro_inventario inventario;
-    
+
     /**
      * Creates new form MDIhome
      */
     public MDIhome() {
         initComponents();
+        devolucions = new RegistroDevoluciones();
         
 
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -291,19 +291,17 @@ public class MDIhome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void NuevaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevaVentaActionPerformed
-      
-       
-               Nventa nv = new Nventa();
-       nv.setVisible(true);
-             desktopPane.add(nv);
-       nv.show();        // TODO add your handling code here:
+
+        Nventa nv = new Nventa();
+        nv.setVisible(true);
+        desktopPane.add(nv);
+        nv.show();        // TODO add your handling code here:
     }//GEN-LAST:event_NuevaVentaActionPerformed
 
     private void ListaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaVentaActionPerformed
         // TODO add your handling code here:
-              
-       
-           
+
+
     }//GEN-LAST:event_ListaVentaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -334,11 +332,10 @@ public class MDIhome extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        RegistroDevoluciones d1 = new RegistroDevoluciones();
+        d1.setVisible(true);
+        d1.show();
 
-        
-        inventario.ObtenerDato();
-        inventario.setVisible(true);
-        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -361,7 +358,7 @@ public class MDIhome extends javax.swing.JFrame {
         Nventa v = new Nventa();
         v.setVisible(true);
         v.show();
-        
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
