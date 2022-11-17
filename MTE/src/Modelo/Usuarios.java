@@ -10,6 +10,14 @@ package Modelo;
  */
 public class Usuarios {
 
+    private int ID_empleado;
+    private String nomb1;
+    private String nomb2;
+    private String apell1;
+    private String apell2;
+    private String numcelu;
+    private String direc;
+
     public Usuarios(int ID_empleado, String nomb1, String nomb2, String apell1, String apell2, String numcelu, String direc) {
         this.ID_empleado = ID_empleado;
         this.nomb1 = nomb1;
@@ -27,6 +35,11 @@ public class Usuarios {
         this.apell2 = apell2;
         this.numcelu = numcelu;
         this.direc = direc;
+    }
+
+    public Usuarios(int ID_empleado, String nomb1) {
+        this.ID_empleado = ID_empleado;
+        this.nomb1 = nomb1;
     }
 
     public int getID_empleado() {
@@ -84,13 +97,11 @@ public class Usuarios {
     public void setDirec(String direc) {
         this.direc = direc;
     }
-
     
-        private int ID_empleado;
-        private String nomb1;
-        private String nomb2;
-        private String apell1;
-        private String apell2;
-        private String numcelu;
-        private String direc;
+    
+    
+    @Override
+    public String toString(){
+       return ID_empleado + " - " + nomb1;
+   }
 }

@@ -22,54 +22,70 @@ public class Nventa extends javax.swing.JInternalFrame {
     public Nventa() {
         initComponents();
         IDVENTA.setEnabled(false);
+        CODCLI.setEnabled(false);
+        ID_emple.setEnabled(false);
+        CODCLI.setVisible(false);
+        ID_emple.setVisible(false);
+        jLabelEmpleadoID.setVisible(false);
+        jLabelclientecod.setVisible(false);
+        
         llenarCombo();
+        llenarCombo2();
     }
-
-    public void llenarCombo(){
-        List <Clientes> clientess = new DAOCliente().ObtenerDatos();
+    
+    public void llenarCombo2() {
+        
+        List<Usuarios> usuarioss = new DAOUsuario().ObtenerDatos();
+        for (int i = 0; i < usuarioss.size(); i++) {
+            
+            jComboBoxID_empleado.addItem(new Usuarios(usuarioss.get(i).getID_empleado(),
+                    usuarioss.get(i).getNomb1()));
+            
+        }
+        int id = jComboBoxID_empleado.getItemAt(jComboBoxID_empleado.getSelectedIndex()).getID_empleado();
+        
+        ID_emple.setText("" + id);
+    }
+    
+    public void llenarCombo() {
+        List<Clientes> clientess = new DAOCliente().ObtenerDatos();
         for (int i = 0; i < clientess.size(); i++) {
             
             jComboBoxCodCliente.addItem(new Clientes(clientess.get(i).getCodcli(),
-            clientess.get(i).getNomb1()));
+                    clientess.get(i).getNomb1()));
         }
         
         int id = jComboBoxCodCliente.getItemAt(jComboBoxCodCliente.getSelectedIndex()).getCodcli();
-        CODCLI.setText("" +id);
+        CODCLI.setText("" + id);
         
     }
-    
-    
-    
-    
-    
     
     public void limpiarCampos() {
         IDVENTA.setText("");
         ARTICULO.setText("");
         FECHA.setText("");
         PRECIO.setText("");
-        CODCLI.setText("");
-        ID_emple.setText("");
-
+        
+        
     }
-
+    
     public void ObtenerDatos() {
-
+        
         List<Venta> ventss = new DAOVenta().ObtenerDatos();
-
+        
         DefaultTableModel modelo = new DefaultTableModel();
-
+        
         String[] columnas = {"ID_venta", "Articulo", "Fecha", "Precio", "Codigo_cliente", "ID_Empleado"};
-
+        
         modelo.setColumnIdentifiers(columnas);
-
+        
         for (Venta v : ventss) {
-
+            
             String[] renglon = {Integer.toString(v.getID_venta()), v.getArticulo(),
                 v.getFecha().toString(), v.getPrecio(), Integer.toString(v.getCodcli()),
                 Integer.toString(v.getID_empleado())};
             modelo.addRow(renglon);
-
+            
         }
         jTableVentas.setModel(modelo);
     }
@@ -95,9 +111,9 @@ public class Nventa extends javax.swing.JInternalFrame {
         FECHA = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         ID_emple = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        jLabelEmpleadoID = new javax.swing.JLabel();
         CODCLI = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
+        jLabelclientecod = new javax.swing.JLabel();
         jComboBoxCodCliente = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxID_empleado = new javax.swing.JComboBox<>();
@@ -141,11 +157,11 @@ public class Nventa extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel10.setText("Fecha :");
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel7.setText("ID Empleado:");
+        jLabelEmpleadoID.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabelEmpleadoID.setText("ID Empleado:");
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel9.setText("Codigo cliente :");
+        jLabelclientecod.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabelclientecod.setText("Codigo cliente :");
 
         jComboBoxCodCliente.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -155,6 +171,12 @@ public class Nventa extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel2.setText("Codigo cliente :");
+
+        jComboBoxID_empleado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxID_empleadoItemStateChanged(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel3.setText("ID_Empleado :");
@@ -187,16 +209,14 @@ public class Nventa extends javax.swing.JInternalFrame {
                         .addComponent(PRECIO, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(70, 70, 70)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
+                    .addComponent(jLabelclientecod)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel3))
+                            .addComponent(jLabel3)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel2)
-                                .addComponent(jLabel7)))))
+                                .addComponent(jLabelEmpleadoID)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(CODCLI, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
@@ -211,8 +231,11 @@ public class Nventa extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabelclientecod)
+                            .addComponent(CODCLI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(IDVENTA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -225,30 +248,24 @@ public class Nventa extends javax.swing.JInternalFrame {
                             .addComponent(jLabel10)
                             .addComponent(FECHA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addGap(90, 90, 90)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(CODCLI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(ID_emple, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jComboBoxCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(PRECIO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel6)
+                            .addComponent(PRECIO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelEmpleadoID)
+                            .addComponent(ID_emple, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxID_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
-                .addContainerGap(12, Short.MAX_VALUE))
+                            .addComponent(jLabel2)
+                            .addComponent(jComboBoxCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jComboBoxID_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jToolBar1.add(jPanel1);
@@ -294,22 +311,39 @@ public class Nventa extends javax.swing.JInternalFrame {
             }
         });
 
+        jTableVentas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+            }
+        ));
+        jScrollPane2.setViewportView(jTableVentas);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel11)
-                .addGap(42, 42, 42)
-                .addComponent(BtngGuard, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(42, 42, 42)
+                        .addComponent(BtngGuard, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,21 +358,10 @@ public class Nventa extends javax.swing.JInternalFrame {
                             .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(1, 1, 1))
                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(10, 10, 10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-
-        jTableVentas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
-            }
-        ));
-        jScrollPane2.setViewportView(jTableVentas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -346,19 +369,14 @@ public class Nventa extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -374,7 +392,7 @@ public class Nventa extends javax.swing.JInternalFrame {
         String precio = PRECIO.getText();
         String codcli = CODCLI.getText();
         String ID_empleado = ID_emple.getText();
-
+        
         if (articulo.contentEquals("") || fecha.contentEquals("") || precio.contentEquals("") || codcli.contentEquals("") || ID_empleado.contentEquals("")) {
             JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorio");
         } else {
@@ -397,11 +415,11 @@ public class Nventa extends javax.swing.JInternalFrame {
         int fila = this.jTableVentas.getSelectedRow();
         if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Selecione un registro de la tabla primero");
-        }else{
-            try{
+        } else {
+            try {
                 int idv = Integer.parseInt((String) this.jTableVentas.getValueAt(fila, 0).toString());
                 String art = (String) this.jTableVentas.getValueAt(fila, 1);
-                Date fechst = Date.valueOf((String)this.jTableVentas.getValueAt(fila, 2).toString());
+                Date fechst = Date.valueOf((String) this.jTableVentas.getValueAt(fila, 2).toString());
                 String prec = (String) this.jTableVentas.getValueAt(fila, 3);
                 int codclien = Integer.parseInt((String) this.jTableVentas.getValueAt(fila, 4).toString());
                 int idemp = Integer.parseInt((String) this.jTableVentas.getValueAt(fila, 5).toString());
@@ -412,13 +430,11 @@ public class Nventa extends javax.swing.JInternalFrame {
                 PRECIO.setText("" + prec);
                 CODCLI.setText("" + codclien);
                 ID_emple.setText("" + idemp);
-                        
                 
-                
-            }catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-                
+            
         }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
@@ -430,9 +446,9 @@ public class Nventa extends javax.swing.JInternalFrame {
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         int fila = this.jTableVentas.getSelectedRow();
-        if(fila==-1){
+        if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Selecione un registro de la tabla primero");
-        }else{
+        } else {
             int id = Integer.parseInt((String) this.jTableVentas.getValueAt(fila, 0).toString());
             DAOVenta dao = new DAOVenta();
             dao.Eliminar(id);
@@ -442,11 +458,16 @@ public class Nventa extends javax.swing.JInternalFrame {
 
     private void jComboBoxCodClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxCodClienteItemStateChanged
         int id = jComboBoxCodCliente.getItemAt(jComboBoxCodCliente.getSelectedIndex()).getCodcli();
-        CODCLI.setText("" +id);
+        CODCLI.setText("" + id);
     }//GEN-LAST:event_jComboBoxCodClienteItemStateChanged
 
-
-    public void ActualizarVenta(){
+    private void jComboBoxID_empleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxID_empleadoItemStateChanged
+        int id = jComboBoxID_empleado.getItemAt(jComboBoxID_empleado.getSelectedIndex()).getID_empleado();
+        
+        ID_emple.setText("" + id);
+    }//GEN-LAST:event_jComboBoxID_empleadoItemStateChanged
+    
+    public void ActualizarVenta() {
         int idv = Integer.parseInt(this.IDVENTA.getText());
         String art = this.ARTICULO.getText();
         Date fechst = Date.valueOf(this.FECHA.getText());
@@ -456,14 +477,14 @@ public class Nventa extends javax.swing.JInternalFrame {
         
         DAOVenta dao = new DAOVenta();
         int ventt = dao.Actualizar(idv, art, fechst, prec, codclien, idemp);
-        if (ventt ==1){
+        if (ventt == 1) {
             JOptionPane.showMessageDialog(rootPane, "¡Venta Actualizada!");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "¡Ocurrio un ERROR!");
         }
-           
+        
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ARTICULO;
     private javax.swing.JButton BtngGuard;
@@ -476,7 +497,7 @@ public class Nventa extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JComboBox<Clientes> jComboBoxCodCliente;
-    private javax.swing.JComboBox<String> jComboBoxID_empleado;
+    private javax.swing.JComboBox<Usuarios> jComboBoxID_empleado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -485,8 +506,8 @@ public class Nventa extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelEmpleadoID;
+    private javax.swing.JLabel jLabelclientecod;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
