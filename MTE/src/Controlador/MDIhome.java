@@ -16,11 +16,17 @@ import Vista.RegistroDevoluciones;
  */
 public class MDIhome extends javax.swing.JFrame {
 
+    private Registro_inventario inventario;
+    
     /**
      * Creates new form MDIhome
      */
     public MDIhome() {
         initComponents();
+        
+        
+        inventario = new Registro_inventario();
+        desktopPane.add(inventario);
     }
     
 
@@ -292,10 +298,10 @@ public class MDIhome extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        Registro_inventario in = new Registro_inventario();
-        in.setVisible(true);
-        desktopPane.add(in);
-        in.show();
+        
+        inventario.ObtenerDato();
+        inventario.setVisible(true);
+        
         // TODO add your handling code here:
 
     }//GEN-LAST:event_jButton2ActionPerformed
