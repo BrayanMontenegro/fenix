@@ -8,7 +8,7 @@ import java.util.*;
 
 /**
  *
- * @author Elieth
+ * @author Oreki
  */
 public class DAOIventario {
 
