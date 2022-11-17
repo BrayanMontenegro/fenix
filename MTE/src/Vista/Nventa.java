@@ -4,11 +4,10 @@
  */
 package Vista;
 
-import Modelo.DAOVenta;
-import Modelo.Venta;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
 import Modelo.*;
+import java.util.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,9 +21,9 @@ public class Nventa extends javax.swing.JInternalFrame {
      */
     public Nventa() {
         initComponents();
-       IDVENTA.setEnabled(false);
-} 
-    
+        IDVENTA.setEnabled(false);
+    }
+
     public void limpiarCampos() {
         IDVENTA.setText("");
         ARTICULO.setText("");
@@ -32,28 +31,30 @@ public class Nventa extends javax.swing.JInternalFrame {
         PRECIO.setText("");
         CODCLI.setText("");
         ID_emple.setText("");
-        
+
     }
 
     public void ObtenerDatos() {
-        
-        List<Venta> ven = new DAOVenta().ObtenerDatos();
-                
-      DefaultTableModel modelo=new DefaultTableModel();
-      
-      String[] columnas = {"ID Venta", "Articulo", "Fecha Venta", "Cantidad","Precio", "Codigo Cliente", "ID Empleado"};
-      
-    modelo.setColumnIdentifiers(columnas);
-        for (Venta vent:ven) {
-        {
-            String[]renglon = {Integer.toString(vent.getID_venta()),vent.getArticulo(),vent.getFecha(),vent.getPrecio(),Integer.toString(vent.getCodcli()), Integer.toString(vent.getID_empleado())};
-                
-                modelo.addRow(renglon);
-                
+
+        List<Venta> ventss = new DAOVenta().ObtenerDatos();
+
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        String[] columnas = {"ID_venta", "Articulo", "Fecha", "Precio", "Codigo_cliente", "ID_Empleado"};
+
+        modelo.setColumnIdentifiers(columnas);
+
+        for (Venta v : ventss) {
+
+            String[] renglon = {Integer.toString(v.getID_venta()), v.getArticulo(),
+                v.getFecha().toString(), v.getPrecio(), Integer.toString(v.getCodcli()),
+                Integer.toString(v.getID_empleado())};
+            modelo.addRow(renglon);
+
         }
-        }
-  tablaventa.setModel(modelo);
-}
+        jTableVentas.setModel(modelo);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,8 +82,11 @@ public class Nventa extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         BtngGuard = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaventa = new javax.swing.JTable();
+        jButtonEditar = new javax.swing.JButton();
+        jButtonActualizar = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableVentas = new javax.swing.JTable();
 
         setClosable(true);
         setResizable(true);
@@ -206,16 +210,39 @@ public class Nventa extends javax.swing.JInternalFrame {
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel11.setText("Detalles de la Venta");
 
-        BtngGuard.setBackground(new java.awt.Color(0, 153, 51));
+        BtngGuard.setBackground(new java.awt.Color(0, 153, 0));
         BtngGuard.setForeground(new java.awt.Color(255, 255, 255));
-        BtngGuard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save white.png"))); // NOI18N
         BtngGuard.setText("Guardar");
-        BtngGuard.setToolTipText("");
-        BtngGuard.setBorder(null);
-        BtngGuard.setBorderPainted(false);
         BtngGuard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtngGuardActionPerformed(evt);
+            }
+        });
+
+        jButtonEditar.setBackground(new java.awt.Color(0, 153, 204));
+        jButtonEditar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+
+        jButtonActualizar.setBackground(new java.awt.Color(0, 153, 204));
+        jButtonActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonActualizar.setText("Actualizar");
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
+
+        jButtonEliminar.setBackground(new java.awt.Color(153, 0, 51));
+        jButtonEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
             }
         });
 
@@ -226,69 +253,55 @@ public class Nventa extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel11)
-                .addGap(84, 84, 84)
-                .addComponent(BtngGuard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(325, 325, 325))
+                .addGap(42, 42, 42)
+                .addComponent(BtngGuard, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(BtngGuard, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtngGuard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(1, 1, 1))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(10, 10, 10))
         );
 
-        tablaventa.setForeground(new java.awt.Color(255, 255, 255));
-        tablaventa.setModel(new javax.swing.table.DefaultTableModel(
+        jTableVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID Venta", "Articulo", "Fecha Venta", "Cantidad", "Precio", "Codigo Cliente", "ID Empleado"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, true, false, false, true, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tablaventa);
+        ));
+        jScrollPane2.setViewportView(jTableVentas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,8 +310,7 @@ public class Nventa extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -309,21 +321,20 @@ public class Nventa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_IDVENTAActionPerformed
 
     private void BtngGuardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtngGuardActionPerformed
-        //buton guardar
-       String articulo = ARTICULO.getText();
-       String fecha = FECHA.getText();
-       String precio = PRECIO.getText();
-       String  codcli = CODCLI.getText();
-       String ID_empleado = ID_emple.getText();
-       
-       
-  if (articulo.contentEquals("") || fecha.contentEquals("") || precio.contentEquals("")|| codcli.contentEquals("") || ID_empleado.contentEquals("")){
+        String articulo = ARTICULO.getText();
+        String fecha = FECHA.getText();
+        String precio = PRECIO.getText();
+        String codcli = CODCLI.getText();
+        String ID_empleado = ID_emple.getText();
+
+        if (articulo.contentEquals("") || fecha.contentEquals("") || precio.contentEquals("") || codcli.contentEquals("") || ID_empleado.contentEquals("")) {
             JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorio");
         } else {
-        try {
-                int id_empleado = Integer.parseInt(ID_empleado);
-                int Codcli = Integer.parseInt(codcli);
-                Venta vt = new DAOVenta().Insertar(articulo, fecha, precio, Codcli, id_empleado);
+            try {
+                Date fechs = Date.valueOf(fecha);
+                int id_empleadors = Integer.parseInt(ID_empleado);
+                int Codclien = Integer.parseInt(codcli);
+                Venta vt = new DAOVenta().Insertar(articulo, fechs, precio, Codclien, id_empleadors);
                 JOptionPane.showMessageDialog(rootPane, "Registro agregado");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -334,7 +345,72 @@ public class Nventa extends javax.swing.JInternalFrame {
         limpiarCampos();
     }//GEN-LAST:event_BtngGuardActionPerformed
 
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        int fila = this.jTableVentas.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(rootPane, "Selecione un registro de la tabla primero");
+        }else{
+            try{
+                int idv = Integer.parseInt((String) this.jTableVentas.getValueAt(fila, 0).toString());
+                String art = (String) this.jTableVentas.getValueAt(fila, 1);
+                Date fechst = Date.valueOf((String)this.jTableVentas.getValueAt(fila, 2).toString());
+                String prec = (String) this.jTableVentas.getValueAt(fila, 3);
+                int codclien = Integer.parseInt((String) this.jTableVentas.getValueAt(fila, 4).toString());
+                int idemp = Integer.parseInt((String) this.jTableVentas.getValueAt(fila, 5).toString());
+                
+                IDVENTA.setText("" + idv);
+                ARTICULO.setText("" + art);
+                FECHA.setText("" + fechst);
+                PRECIO.setText("" + prec);
+                CODCLI.setText("" + codclien);
+                ID_emple.setText("" + idemp);
+                        
+                
+                
+            }catch(NumberFormatException e){
+                e.printStackTrace();
+            }
+                
+        }
+    }//GEN-LAST:event_jButtonEditarActionPerformed
 
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        ActualizarVenta();
+        ObtenerDatos();
+        limpiarCampos();
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        int fila = this.jTableVentas.getSelectedRow();
+        if(fila==-1){
+            JOptionPane.showMessageDialog(rootPane, "Selecione un registro de la tabla primero");
+        }else{
+            int id = Integer.parseInt((String) this.jTableVentas.getValueAt(fila, 0).toString());
+            DAOVenta dao = new DAOVenta();
+            dao.Eliminar(id);
+            ObtenerDatos();
+        }
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+
+    public void ActualizarVenta(){
+        int idv = Integer.parseInt(this.IDVENTA.getText());
+        String art = this.ARTICULO.getText();
+        Date fechst = Date.valueOf(this.FECHA.getText());
+        String prec = this.PRECIO.getText();
+        int codclien = Integer.parseInt(this.CODCLI.getText());
+        int idemp = Integer.parseInt(this.ID_emple.getText());
+        
+        DAOVenta dao = new DAOVenta();
+        int ventt = dao.Actualizar(idv, art, fechst, prec, codclien, idemp);
+        if (ventt ==1){
+            JOptionPane.showMessageDialog(rootPane, "¡Venta Actualizada!");
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "¡Ocurrio un ERROR!");
+        }
+           
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ARTICULO;
     private javax.swing.JButton BtngGuard;
@@ -343,6 +419,9 @@ public class Nventa extends javax.swing.JInternalFrame {
     private javax.swing.JTextField IDVENTA;
     private javax.swing.JTextField ID_emple;
     private javax.swing.JTextField PRECIO;
+    private javax.swing.JButton jButtonActualizar;
+    private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -353,8 +432,8 @@ public class Nventa extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableVentas;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTable tablaventa;
     // End of variables declaration//GEN-END:variables
 }

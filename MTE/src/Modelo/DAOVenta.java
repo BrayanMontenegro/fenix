@@ -4,45 +4,69 @@
  */
 package Modelo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 /**
  *
  * @author Elieth
  */
 public class DAOVenta {
-    public Venta Insertar(String articulo, String fecha, String precio, int codcli, int id_empleado) {
-        String transaccion = "INSER INTO VENTAS VALUES ('"
+
+    //Metodo para insertar datos a la base de datos
+    public Venta Insertar(String articulo, java.sql.Date fecha, String precio, int codcli, int ID_empleado) {
+        String transaccion = "INSERT INTO VENTAS VALUES ('"
                 + articulo + "', '"
                 + fecha + "', '"
-                +  precio + "', '"
+                + precio + "', '"
                 + codcli + "', '"
-                + id_empleado + "') ";
-        
+                + ID_empleado + "') ";
+
         if (new DataBase().Actualizar(transaccion) > 0) {
-            return new  Venta(articulo, fecha, precio, codcli, id_empleado);
-    }
+            return new Venta(articulo, fecha, precio, codcli, ID_empleado);
+        }
         return null;
-}
-    
- public List ObtenerDatos() {
+    }
+
+    public List ObtenerDatos() {
         String transaccion = "SELECT *FROM VENTAS";
 
-List<Map> registros = new DataBase().Listar(transaccion);
-        List<Venta> vent = new ArrayList();
+        List<Map> registros = new DataBase().Listar(transaccion);
+        List<Venta> ventas = new ArrayList();
         for (Map registro : registros) {
-            
-            Venta ve= new Venta((int) registro.get("ID_venta"),
+
+            Venta ven = new Venta((int) registro.get("ID_venta"),
                     (String) registro.get("articulo"),
-                    (String) registro.get("fecha"),
-                    (String) registro.get(" precio"), 
+                    (java.sql.Date) registro.get("fecha"),
+                    (String) registro.get("precio"),
                     (int) registro.get("codcli"),
-                    (int) registro.get("id_empleado"));
-            
-            vent.add(ve);
+                    (int) registro.get("ID_empleado"));
+
+            ventas.add(ven);
         }
-        return vent;
- }
+        return ventas;
+    }
+
+    public int Actualizar(int ID_venta, String articulo, Date fecha, String precio, int codcli, int ID_empleado) {
+        String transaccion = "UPDATE VENTAS SET  articulo ='"
+                + articulo + "', fecha='"
+                + fecha + "', precio='"
+                + precio + "', codcli='"
+                + codcli + "', ID_empleado='"
+                + ID_empleado + "' WHERE ID_venta= "
+                + ID_venta;
+        return new DataBase().Actualizar(transaccion);
+    }
+
+    
+    
+    
+    
+    public int Eliminar(int id) {
+
+        String transaccion = "DELETE FROM VENTAS WHERE ID_venta='" + id + "'";
+
+        return new DataBase().Actualizar(transaccion);
+
+    }
 }

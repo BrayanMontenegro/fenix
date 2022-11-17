@@ -4,13 +4,22 @@
  */
 package Modelo;
 
+import java.sql.Date;
+import javax.swing.JFrame;
 /**
  *
  * @author Elieth
  */
 public class Venta {
 
-    public Venta(int ID_venta, String articulo, String fecha, String precio, int codcli, int ID_empleado) {
+    private int ID_venta;
+    private String articulo;
+    private Date fecha;
+    private String precio;
+    private int codcli;
+    private int ID_empleado;
+
+    public Venta(int ID_venta, String articulo, Date fecha, String precio, int codcli, int ID_empleado) {
         this.ID_venta = ID_venta;
         this.articulo = articulo;
         this.fecha = fecha;
@@ -19,7 +28,7 @@ public class Venta {
         this.ID_empleado = ID_empleado;
     }
 
-    public Venta(String articulo, String fecha, String precio, int codcli, int ID_empleado) {
+    public Venta(String articulo, Date fecha, String precio, int codcli, int ID_empleado) {
         this.articulo = articulo;
         this.fecha = fecha;
         this.precio = precio;
@@ -43,11 +52,11 @@ public class Venta {
         this.articulo = articulo;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -74,10 +83,7 @@ public class Venta {
     public void setID_empleado(int ID_empleado) {
         this.ID_empleado = ID_empleado;
     }
-    private int ID_venta;
-    private String articulo;
-    private String fecha;
-    private String  precio;
-    private int codcli;
-    private  int ID_empleado;
+
+    
+    
 }
