@@ -35,7 +35,7 @@ CREATE DATABASE DB_MTE
  ( 
     ID_venta INT PRIMARY KEY IDENTITY (1,1)NOT NULL,
 	articulo VARCHAR(26),
-    fecha VARCHAR (10),
+    fecha DATE not null,
     precio VARCHAR (50),
 	codcli INT not null,
 	ID_empleado INT not null
@@ -51,8 +51,8 @@ CREATE TABLE PRODUCTO
 	marca VARCHAR (26),
 	modelo VARCHAR (26),
 	decrip VARCHAR (100),
-	garant VARCHAR  (5),
-	Presio  VARCHAR (6),
+	garant VARCHAR  (10),
+	Precio  VARCHAR (20),
 	stock INT,
  )
 

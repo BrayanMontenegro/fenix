@@ -5,13 +5,11 @@
 package Vista;
 
 
-import Modelo.Clientes;
-import Modelo.DAOIventario;
-import Modelo.Inventario;
-import java.sql.Date;
-import java.util.List;
-import javax.swing.JOptionPane;
+import Modelo.*;
+import java.util.*;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,12 +39,12 @@ public class Registro_inventario extends javax.swing.JInternalFrame {
         List<Inventario> inve =new DAOIventario().ObtenerDatos();
         
          DefaultTableModel modelo = new DefaultTableModel();
-         String[] columnas = {"ID_prod","nombre","marca","descrip","garant","Precio","stock"};
+         String[] columnas = {"ID_prod","nombre","marca","Precio","descrip","garant","stock"};
          modelo.setColumnIdentifiers(columnas);
         for (Inventario  vn:inve){
             
-             String[]renglon = {Integer.toString(vn.getID_prod()),vn.getNombre(),vn.getMarca(),vn.getModelo(),vn.getDescrip()
-                     ,vn.getGarant().toString(), Integer.toString(vn.getPrecio()), Integer.toString(vn.getStock())};
+             String[]renglon = {Integer.toString(vn.getID_prod()),vn.getNombre(),vn.getMarca(),vn.getModelo(),vn.getDecrip()
+                     ,vn.getGarant(), vn.getPrecio(), Integer.toString(vn.getStock())};
                
                  modelo.addRow(renglon);
 
@@ -334,20 +332,20 @@ public class Registro_inventario extends javax.swing.JInternalFrame {
         
         String nombre = jTextnom.getText();
         String marca = jTextmarc.getText();
-        String descrip = jTextdecrp.getText();
+        String decrip = jTextdecrp.getText();
         String garant = jTextgaran.getText();
         String Precio = jTextprec.getText();
         String stock = jTextstock.getText();
                 
-        if ( nombre.contentEquals("")||marca.contentEquals("")||descrip.contentEquals("")
+        if ( nombre.contentEquals("")||marca.contentEquals("")||decrip.contentEquals("")
                 ||garant.contentEquals("")||Precio.contentEquals("") ||stock.contentEquals("")){
               JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorio");
         } else {
             try {
-                Date fech = Date.valueOf(garant);
-                int prec = Integer.parseInt(Precio);
-                int stoc = Integer.parseInt(stock);
-                Inventario iv = new DAOIventario().Insertar(nombre, marca, Precio, descrip, fech, prec, stoc);
+                
+                
+                
+                Inventario iv = new DAOIventario().Insertar(nombre, marca, Precio, decrip, garant, stock, ABORT);
                 JOptionPane.showMessageDialog(rootPane, "Registro agregado");
             } catch (Exception e) {
                 e.printStackTrace();

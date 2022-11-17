@@ -4,40 +4,42 @@
  */
 package Modelo;
 
-import java.util.Date;
+import java.sql.Date;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Elieth
  */
 public class Inventario {
+
     private int ID_prod;
     private String nombre;
     private String marca;
     private String modelo;
-    private String descrip;
-    private Date garant;
-    private int precio;
+    private String decrip;
+    private String garant;
+    private String Precio;
     private int stock;
-    
-    public Inventario(int ID_prod, String nombre, String marca, String modelo, String descrip, Date garant, int precio, int stock) {
+
+    public Inventario(int ID_prod, String nombre, String marca, String modelo, String decrip, String garant, String Precio, int stock) {
         this.ID_prod = ID_prod;
         this.nombre = nombre;
         this.marca = marca;
         this.modelo = modelo;
-        this.descrip = descrip;
+        this.decrip = decrip;
         this.garant = garant;
-        this.precio = precio;
+        this.Precio = Precio;
         this.stock = stock;
     }
 
-    public Inventario(String nombre, String marca, String modelo, String descrip, Date garant, int precio, int stock) {
+    public Inventario(String nombre, String marca, String modelo, String decrip, String garant, String Precio, int stock) {
         this.nombre = nombre;
         this.marca = marca;
         this.modelo = modelo;
-        this.descrip = descrip;
+        this.decrip = decrip;
         this.garant = garant;
-        this.precio = precio;
+        this.Precio = Precio;
         this.stock = stock;
     }
 
@@ -73,28 +75,28 @@ public class Inventario {
         this.modelo = modelo;
     }
 
-    public String getDescrip() {
-        return descrip;
+    public String getDecrip() {
+        return decrip;
     }
 
-    public void setDescrip(String descrip) {
-        this.descrip = descrip;
+    public void setDecrip(String decrip) {
+        this.decrip = decrip;
     }
 
-    public Date getGarant() {
+    public String getGarant() {
         return garant;
     }
 
-    public void setGarant(Date garant) {
+    public void setGarant(String garant) {
         this.garant = garant;
     }
 
-    public int getPrecio() {
-        return precio;
+    public String getPrecio() {
+        return Precio;
     }
 
-    public void setPrecio(int precio) {
-        this.precio = precio;
+    public void setPrecio(String Precio) {
+        this.Precio = Precio;
     }
 
     public int getStock() {
@@ -105,4 +107,6 @@ public class Inventario {
         this.stock = stock;
     }
     
+    
+
 }
