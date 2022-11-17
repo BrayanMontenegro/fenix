@@ -8,6 +8,7 @@ package Vista;
 import Modelo.Clientes;
 import Modelo.DAOIventario;
 import Modelo.Inventario;
+import java.sql.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -44,8 +45,8 @@ public class Registro_inventario extends javax.swing.JInternalFrame {
          modelo.setColumnIdentifiers(columnas);
         for (Inventario  vn:inve){
             
-             String[]renglon = {Integer.toString(vn.getID_Prod()),vn.getNombre(),vn.getMarca(),vn.getModelo(),vn.getDecrip()
-                     ,vn.getGarant(),vn.getPresio(),vn.getStock()};
+             String[]renglon = {Integer.toString(vn.getID_prod()),vn.getNombre(),vn.getMarca(),vn.getModelo(),vn.getDescrip()
+                     ,vn.getGarant().toString(), Integer.toString(vn.getPrecio()), Integer.toString(vn.getStock())};
                
                  modelo.addRow(renglon);
 
@@ -142,7 +143,7 @@ public class Registro_inventario extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("id de articulo:");
+        jLabel2.setText("id de Producto:");
 
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Marca:");
@@ -248,9 +249,9 @@ public class Registro_inventario extends javax.swing.JInternalFrame {
                                             .addComponent(jTextnom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(BtngGuard, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                    .addComponent(BtngGuard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 6, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
@@ -265,13 +266,10 @@ public class Registro_inventario extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextIdprod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel8))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(BtngGuard)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8)
+                    .addComponent(BtngGuard, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextnom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -346,8 +344,10 @@ public class Registro_inventario extends javax.swing.JInternalFrame {
               JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorio");
         } else {
             try {
-                
-                Inventario iv = new DAOIventario().Insertar(nombre, marca, descrip,Precio, garant, Precio, stock);
+                Date fech = Date.valueOf(garant);
+                int prec = Integer.parseInt(Precio);
+                int stoc = Integer.parseInt(stock);
+                Inventario iv = new DAOIventario().Insertar(nombre, marca, Precio, descrip, fech, prec, stoc);
                 JOptionPane.showMessageDialog(rootPane, "Registro agregado");
             } catch (Exception e) {
                 e.printStackTrace();

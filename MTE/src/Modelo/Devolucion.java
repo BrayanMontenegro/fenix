@@ -7,7 +7,7 @@ import java.sql.Date;
 import javax.swing.JFrame;
 /**
  *
- * @author Elieth
+ * @author Oreki
  */
 public class Devolucion {
     
