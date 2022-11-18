@@ -20,46 +20,45 @@ import javax.swing.table.DefaultTableModel;
  */
 public class RegistroClientes extends javax.swing.JInternalFrame {
 
-    
     /**
      * Creates new form Clientes
      */
     public RegistroClientes() {
         initComponents();
-    jtextfieldIDclientes.setEditable(false);
+        jtextfieldIDclientes.setEditable(false);
     }
- public void limpiarCampos(){
-      jtextfieldIDclientes.setText("");
-      jtextFieldPrimerNomb.setText("");
-      jTextFieldSegunNomb.setText("");
-      TextAClientes.setText("");
-      jTextFieldsegunapell.setText("");
-      TextNu.setText("");
-      TextDClientes.setText("");
-      
-      
-      
- }
- public void obtenerDatos(){
-        
-        List<Clientes> cliente=new DAOCliente().ObtenerDatos();
-        
-        DefaultTableModel modelo=new DefaultTableModel();
-        
-       String[] columnas = {"Id de Cliente","Nombre","Seg Nombre","Apellido","Seg Apellido","Telefono","Dirección"};
-       
-        modelo.setColumnIdentifiers(columnas);
-        for (Clientes  clien:cliente){
-            
-             String[]renglon = {Integer.toString(clien.getCodcli()),clien.getNomb1(),clien.getNomb2(),clien.getApell1(),clien.getApell2(),clien.getNumcelu(),clien.getDirec()};
-               
-                 modelo.addRow(renglon);
 
-             }
-                 
-             
+    public void limpiarCampos() {
+        jtextfieldIDclientes.setText("");
+        jtextFieldPrimerNomb.setText("");
+        jTextFieldSegunNomb.setText("");
+        TextAClientes.setText("");
+        jTextFieldsegunapell.setText("");
+        TextNu.setText("");
+        TextDClientes.setText("");
+
+    }
+
+    public void obtenerDatos() {
+
+        List<Clientes> cliente = new DAOCliente().ObtenerDatos();
+
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        String[] columnas = {"Id de Cliente", "Nombre", "Seg Nombre", "Apellido", "Seg Apellido", "Telefono", "Dirección"};
+
+        modelo.setColumnIdentifiers(columnas);
+        for (Clientes clien : cliente) {
+
+            String[] renglon = {Integer.toString(clien.getCodcli()), clien.getNomb1(), clien.getNomb2(), clien.getApell1(), clien.getApell2(), clien.getNumcelu(), clien.getDirec()};
+
+            modelo.addRow(renglon);
+
+        }
+
         tablacliente.setModel(modelo);
- }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -189,7 +188,15 @@ public class RegistroClientes extends javax.swing.JInternalFrame {
             new String [] {
                 "Id de Cliente", "Nombre", "Seg Nombre", "Apellido", "Seg Apellido", "Telefono", "Dirección"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tablacliente);
 
         jBottonActualizar.setBackground(new java.awt.Color(0, 153, 255));
@@ -291,7 +298,7 @@ public class RegistroClientes extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(437, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,33 +316,32 @@ public class RegistroClientes extends javax.swing.JInternalFrame {
 
     private void BtngCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtngCActionPerformed
 //buton guardar       
-        String codcli = jtextfieldIDclientes.getText();
-        String nomb1 = jtextFieldPrimerNomb.getText();
-        String nomb2= jTextFieldSegunNomb.getText();
-        String  apell1=TextAClientes.getText();
-        String  apell2=jTextFieldsegunapell.getText();
-        String  numcelu= TextNu.getText();
-        String  direc= TextDClientes.getText();
         
+        String nomb1 = jtextFieldPrimerNomb.getText();
+        String nomb2 = jTextFieldSegunNomb.getText();
+        String apell1 = TextAClientes.getText();
+        String apell2 = jTextFieldsegunapell.getText();
+        String numcelu = TextNu.getText();
+        String direc = TextDClientes.getText();
 
-        if(nomb1.contentEquals("")||nomb2.contentEquals("")||
-            direc.contentEquals("")||numcelu.contentEquals("")||
-            apell1.contentEquals("")||apell2.contentEquals("")){
+        if (nomb1.contentEquals("") || nomb2.contentEquals("")
+                || direc.contentEquals("") || numcelu.contentEquals("")
+                || apell1.contentEquals("") || apell2.contentEquals("")) {
             JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorio");
-        }else{
-            try{
+        } else {
+            try {
 
-                Clientes cl =new DAOCliente().insertar(WIDTH, nomb1, nomb2, apell1, apell2, numcelu, direc);
+                Clientes ci = new DAOCliente().Insertar(nomb1, nomb2, apell1, apell2, numcelu, direc);
                 JOptionPane.showMessageDialog(rootPane, "Registro agregado");
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(rootPane, "No se agrego el registro");
             }
-}
+        }
 
         obtenerDatos();
-        
+
 
     }//GEN-LAST:event_BtngCActionPerformed
 
@@ -348,7 +354,7 @@ public class RegistroClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextFieldSegunNombActionPerformed
 
     private void jBottonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBottonActualizarActionPerformed
-       
+
         limpiarCampos();
     }//GEN-LAST:event_jBottonActualizarActionPerformed
 
