@@ -252,7 +252,7 @@ public class MDIMTE extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         RegistroDevoluciones rbd =new RegistroDevoluciones();
-        rbd.setVisible(true);
+        desktopPane.add(rbd);
         rbd.show();
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -267,13 +267,17 @@ public class MDIMTE extends javax.swing.JFrame {
            // TODO add your handling code here:
            
           RegistroClientes rcl = new RegistroClientes();
-          rcl.setVisible(true);
+         desktopPane.add(rcl);
           rcl.show();
        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        
+        Registro_inventario rp = new Registro_inventario();
+       desktopPane.add(rp);
+        rp.show();
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -289,9 +293,6 @@ public class MDIMTE extends javax.swing.JFrame {
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         // TODO add your handling code here:
         
-        Registro_inventario rp = new Registro_inventario();
-        desktopPane.add(rp);
-        rp.show();
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     /**
