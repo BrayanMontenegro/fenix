@@ -12,7 +12,7 @@ import java.util.*;
 public class DataBase {
     
     
-String URL="jdbc:sqlserver://localhost:51745;databaseName=DB_MTE;"+
+String URL="jdbc:sqlserver://localhost:64637;databaseName=DB_MTE;"+
     "integratedSecurity=true;"+"encrypt=true;trustServerCertificate=true;";
 
 private Connection conexion;
